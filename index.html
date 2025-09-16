@@ -82,15 +82,15 @@ ul li:hover {
     opacity: 0.7;
 }
 
-</style><script role="script" id="twine-user-script" type="text/twine-javascript"></script><tw-passagedata pid="1" name="Start" tags="" position="925,175" size="200,200">&lt;!--(set: $D to 0)
-(set: $I to 0)
-(set: $S to 0)
-(set: $C to 0)--&gt;
-(text-colour:black)[[&lt;div class=&quot;card&quot;&gt;
+</style><script role="script" id="twine-user-script" type="text/twine-javascript"></script><tw-passagedata pid="1" name="Start" tags="" position="925,175" size="200,200">(text-colour:black)[[&lt;div class=&quot;card&quot;&gt;
 &lt;div class=&quot;question&quot;&gt;(enchant:?passage,(text-colour:black))[[Are you ready to find out your innate personality? Let&#39;s see what awaits...] (text-colour:navy)[// &#39;&#39; [[Click here|Question 1]]&#39;&#39;//]
 
 &lt;/div&gt;&lt;div class=&quot;progress-container&quot;&gt;&lt;div class=&quot;progress-bar&quot; style=&quot;width:8%;&quot;&gt;&lt;/div&gt;&lt;/div&gt;&lt;div class=&quot;question-count&quot;&gt;1/20&lt;/div&gt;&lt;/div&gt;]
-]]</tw-passagedata><tw-passagedata pid="2" name="Question 1" tags="" position="1500,100" size="100,100">You are finally in bed after a long day, the weekends start tomorrow - finally! What are you thinking about?
+]]
+{(set: $D to 0)
+(set: $I to 0)
+(set: $S to 0)
+(set: $C to 0)}</tw-passagedata><tw-passagedata pid="2" name="Question 1" tags="" position="1500,100" size="100,100">You are finally in bed after a long day, the weekends start tomorrow - finally! What are you thinking about?
 * (link: &quot;A. On Tiktok looking for things I can do tomorrow!&quot;)[(set: $D to (either: $D, 0) + 1)(go-to: &quot;Question 2&quot;)]
 * (link: &quot;B. Replaying the day&#39;s activities, wondering if I said anything out of sorts today...&quot;)[(set: $C to (either: $C, 0) + 1)(go-to: &quot;Question 2&quot;)]
 * (link: &quot;C. Video calling my friends to hear about their day hehe~&quot;)[(set: $I to (either: $I, 0) + 1)(go-to: &quot;Question 2&quot;)]
@@ -175,7 +175,7 @@ ul li:hover {
 * (link: &quot;C. This must be a dream, I am just going to lie here for a while.&quot;)[(set: $S to $S + 1)(go-to: &quot;Question 5&quot;)]
 * (link: &quot;D. Where on earth am I? I need to figure it out.&quot;)[(set: $C to $C + 1)(go-to: &quot;Question 5&quot;)]
 &lt;/div&gt;&lt;div class=&quot;progress-container&quot;&gt;&lt;div class=&quot;progress-bar&quot; style=&quot;width:8%;&quot;&lt;/div&gt;&lt;/div&gt;&lt;div class=&quot;question-count&quot;&gt;5/20&lt;/div&gt;&lt;/div&gt;</tw-passagedata><tw-passagedata pid="7" name="Result D" tags="" position="800,750" size="100,100">&lt;div style=&quot;text-align:center;&quot;&gt;
-&lt;a data-flickr-embed=&quot;true&quot; href=&quot;&lt;a data-flickr-embed=&quot;true&quot; href=&quot;https://www.flickr.com/photos/76530666@N07/54779767793/in/dateposted/&quot; title=&quot;White Colorful Illustrative Personality Adjectives Vocabulary Worksheet - 1&quot;&gt;&lt;img src=&quot;https://live.staticflickr.com/65535/54779767793_49fbea7e07_c.jpg&quot; width=&quot;300&quot; height=&quot;450&quot; alt=&quot;White Colorful Illustrative Personality Adjectives Vocabulary Worksheet - 1&quot;/&gt;&lt;/a&gt;&lt;script async src=&quot;//embedr.flickr.com/assets/client-code.js&quot; charset=&quot;utf-8&quot;&gt;&lt;/script&gt;&quot;/&gt;&lt;/a&gt;&lt;script async src=&quot;//embedr.flickr.com/assets/client-code.js&quot; charset=&quot;utf-8&quot;&gt;&lt;/script&gt;
+&lt;a data-flickr-embed=&quot;true&quot; href=&quot;&lt;a data-flickr-embed=&quot;true&quot; href=&quot;https://www.flickr.com/photos/76530666@N07/54779767793/in/dateposted/&quot; title=&quot;White Colorful Illustrative Personality Adjectives Vocabulary Worksheet - 1&quot;&gt;&lt;img src=&quot;https://live.staticflickr.com/65535/54779767793_49fbea7e07_c.jpg&quot; width=&quot;300&quot; height=&quot;350&quot; alt=&quot;White Colorful Illustrative Personality Adjectives Vocabulary Worksheet - 1&quot;/&gt;&lt;/a&gt;&lt;script async src=&quot;//embedr.flickr.com/assets/client-code.js&quot; charset=&quot;utf-8&quot;&gt;&lt;/script&gt;&quot;/&gt;&lt;/a&gt;&lt;script async src=&quot;//embedr.flickr.com/assets/client-code.js&quot; charset=&quot;utf-8&quot;&gt;&lt;/script&gt;
 [[Play Again|Start]]
 &lt;/div&gt;
 
@@ -427,7 +427,7 @@ What do you do?
 * (link: &quot;B. A scrap of festival food, sweet and impossible.&quot;)[(set: $I to $I + 1)(go-to: &quot;Results&quot;)]
 * (link: &quot;C. An egg, with a note that says &#39;Thank you.&quot;)[(set: $S to $S + 1)(go-to: &quot;Results&quot;)]
 * (link: &quot;D. The crystal you were given, still faintly glowing.&quot;)[(set: $D to $D + 1)(go-to: &quot;Results&quot;)]
-&lt;/div&gt;&lt;div class=&quot;progress-container&quot;&gt;&lt;div class=&quot;progress-bar&quot; style=&quot;width:8%;&quot;&lt;/div&gt;&lt;/div&gt;&lt;div class=&quot;question-count&quot;&gt;20/20&lt;/div&gt;&lt;/div&gt;</tw-passagedata><tw-passagedata pid="35" name="Results" tags="" position="1650,625" size="100,100">/* Step 1: Determine primary trait */
+&lt;/div&gt;&lt;div class=&quot;progress-container&quot;&gt;&lt;div class=&quot;progress-bar&quot; style=&quot;width:8%;&quot;&lt;/div&gt;&lt;/div&gt;&lt;div class=&quot;question-count&quot;&gt;20/20&lt;/div&gt;&lt;/div&gt;</tw-passagedata><tw-passagedata pid="35" name="Results 1" tags="" position="1650,625" size="100,100">/* Step 1: Determine primary trait */
 (set: _primary to &quot;D&quot;)
 (set: _max to $D)
 (if: $I &gt; _max)[(set: _primary to &quot;I&quot;)(set: _max to $I)]
@@ -443,7 +443,7 @@ What do you do?
 (if: (_primary is not &quot;C&quot;) and ($C &gt; _secondScore))[(set: _secondScore to $C)(set: _second to &quot;C&quot;)]
 
 /* Step 3: Build result string */
-(set: _comboThreshold to 4)  /* max difference to count as combo */
+(set: _comboThreshold to 3)  /* max difference to count as combo */
 (set: _result to _primary)
 (if: (_second is not &quot;&quot;) and ((_max - _secondScore) &lt;= _comboThreshold))[
     (set: _result to _result + _second)
@@ -458,6 +458,8 @@ What do you do?
 (if: _result is &quot;IS&quot;)[(set: _result to &quot;IS&quot;)]
 (if: _result is &quot;DS&quot;)[(set: _result to &quot;DS&quot;)]
 /* Add other 2-letter combos as needed */
+
+
 
 /* Step 5: Debug output (optional) */
 (link: &quot;Go to Debug&quot;)[
@@ -621,12 +623,75 @@ What do you do?
 * (link: &quot;B. Test each stone with a tap before committing.&quot;)[(set: $C to $C + 1)(go-to: &quot;Question 6&quot;)]
 * (link: &quot;C. Hop, skip and jump!&quot;)[(set: $I to $I + 1)(go-to: &quot;Question 6&quot;)]
 * (link: &quot;D. Leap from stone to stone with wide strides.&quot;)[(set: $D to $D + 1)(go-to: &quot;Question 6&quot;)]
-&lt;/div&gt;&lt;div class=&quot;progress-container&quot;&gt;&lt;div class=&quot;progress-bar&quot; style=&quot;width:8%;&quot;&lt;/div&gt;&lt;/div&gt;&lt;div class=&quot;question-count&quot;&gt;6/20&lt;/div&gt;&lt;/div&gt;</tw-passagedata><tw-passagedata pid="43" name="Untitled Passage 1" tags="" position="1850,750" size="100,100"></tw-passagedata><tw-passagedata pid="44" name="Question 6" tags="" position="1500,200" size="100,100">You step into a glowing festival, people in animal masks whirl past you. 
+&lt;/div&gt;&lt;div class=&quot;progress-container&quot;&gt;&lt;div class=&quot;progress-bar&quot; style=&quot;width:8%;&quot;&lt;/div&gt;&lt;/div&gt;&lt;div class=&quot;question-count&quot;&gt;6/20&lt;/div&gt;&lt;/div&gt;</tw-passagedata><tw-passagedata pid="43" name="Question 6" tags="" position="1500,200" size="100,100">You step into a glowing festival, people in animal masks whirl past you. 
  * (link: &quot;A. Hurriedly find a mask on the floor and blend into the crowd.&quot;)[(set: $I to $I + 1)(go-to: &quot;Question 7&quot;)]
 * (link: &quot;B. Keep walking into the village, ignoring the stares.&quot;)[(set: $D to $D + 1)(go-to: &quot;Question 7&quot;)]
 * (link: &quot;C. Drift to the side, quietly going down a small alleyway where no one can see you.&quot;)[(set: $S to $S + 1)(go-to: &quot;Question 7&quot;)]
 * (link: &quot;D. Stand to a corner and observe, why are they wearing masks?&quot;)[(set: $C to $C + 1)(go-to: &quot;Question 7&quot;)]
 &lt;/div&gt;&lt;div class=&quot;progress-container&quot;&gt;&lt;div class=&quot;progress-bar&quot; style=&quot;width:8%;&quot;&lt;/div&gt;&lt;/div&gt;&lt;div class=&quot;question-count&quot;&gt;7/20&lt;/div&gt;&lt;/div&gt;
+</tw-passagedata><tw-passagedata pid="44" name="Results" tags="" position="1300,500" size="100,100">/* Step 1: Determine primary trait */
+(set: _primary to &quot;D&quot;)
+(set: _max to $D)
+
+(if: $I &gt; _max)[
+    (set: _primary to &quot;I&quot;)
+    (set: _max to $I)
+]
+(if: $S &gt; _max)[
+    (set: _primary to &quot;S&quot;)
+    (set: _max to $S)
+]
+(if: $C &gt; _max)[
+    (set: _primary to &quot;C&quot;)
+    (set: _max to $C)
+]
+
+/* Step 2: Determine secondary trait */
+(set: _secondScore to -1)
+(set: _second to &quot;&quot;)
+
+(if: _primary is not &quot;D&quot; and $D &gt; _secondScore)[
+    (set: _secondScore to $D)
+    (set: _second to &quot;D&quot;)
+]
+(if: _primary is not &quot;I&quot; and $I &gt; _secondScore)[
+    (set: _secondScore to $I)
+    (set: _second to &quot;I&quot;)
+]
+(if: _primary is not &quot;S&quot; and $S &gt; _secondScore)[
+    (set: _secondScore to $S)
+    (set: _second to &quot;S&quot;)
+]
+(if: _primary is not &quot;C&quot; and $C &gt; _secondScore)[
+    (set: _secondScore to $C)
+    (set: _second to &quot;C&quot;)
+]
+
+/* Step 3: Build result string */
+(set: _comboThreshold to 3)
+(set: _result to _primary)
+
+(if: _second is not &quot;&quot; and (_max - _secondScore) &lt;= _comboThreshold)[
+    (set: _result to _primary + _second)
+]
+
+/* Step 4: Output scores and traits */
+== Your DISC Results ==
+
+**Trait Scores**
+- D: $D
+- I: $I
+- S: $S
+- C: $C
+
+**Calculated Traits**
+- Primary: &#39;&#39;_primary&#39;&#39;
+- Secondary: &#39;&#39;_second&#39;&#39;
+- Primary Score: &#39;&#39;_max&#39;&#39;
+- Secondary Score: &#39;&#39;_secondScore&#39;&#39;
+- Final Result Code: &#39;&#39;&#39;_result&#39;&#39;&#39;
+
+(go-to: &quot;Result &quot; + _result)[[View Your Result →-&gt;Result {_result}]]
 </tw-passagedata></tw-storydata>
 <script title="Twine engine code" data-main="harlowe">(function(){"use strict";
 var require,define;!function(){var e={},r={};require=function(i){var n=e[i];return n&&(r[i]=n[1].apply(void 0,n[0].map(require)),e[i]=void 0),r[i]},(define=function(r,i,n){if("function"==typeof r)return r();e[r]=[i,n]}).amd=!0}();/*!
