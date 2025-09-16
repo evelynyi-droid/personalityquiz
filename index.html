@@ -459,7 +459,7 @@ What do you do?
 (if: (_primary is not &quot;C&quot;) and ($C &gt; _secondScore))[(set: _secondScore to $C)(set: _second to &quot;C&quot;)]
 
 /* Step 3: Build result string */
-(set: _comboThreshold to 4)  /* max difference to count as combo */
+(set: _comboThreshold to 3)  /* max difference to count as combo */
 (set: _result to _primary)
 (if: (_second is not &quot;&quot;) and ((_max - _secondScore) &lt;= _comboThreshold))[
     (set: _result to _result + _second)
