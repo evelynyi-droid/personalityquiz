@@ -395,8 +395,8 @@ What do you pick?
 
 </tw-passagedata><tw-passagedata pid="29" name="Question 12" tags="" position="1600,300" size="100,100">Before you leave, the family whispers of a strange exit ahead. They press four shimmering crystals into your hands and ask you to choose one for protection. Which do you take?
 
-* (link: &quot;A. The ruby — I take it to carry courage and bold action into the world.&quot;)[(set: $D to $D + 3)(go-to: &quot;Question 13&quot;)]
-* (link: &quot;B. The citrine — I take it to carry warmth, joy, and connection with others.&quot;)[(set: $I to $I + 3)(go-to: &quot;Question 13&quot;)]
+* (link: &quot;A. The ruby — I take it to carry courage and bold action into the world.&quot;)[(set: $D to $D + 1)(go-to: &quot;Question 13&quot;)]
+* (link: &quot;B. The citrine — I take it to carry warmth, joy, and connection with others.&quot;)[(set: $I to $I + 1)(go-to: &quot;Question 13&quot;)]
 * (link: &quot;C. The emerald — I take it to carry calm, care, and support for those around me.&quot;)[(set: $S to $S + 3)(go-to: &quot;Question 13&quot;)]
 * (link: &quot;D. The amethyst — I take it to carry clarity, insight, and understanding.&quot;)[(set: $C to $C + 3)(go-to: &quot;Question 13&quot;)]
 &lt;/div&gt;&lt;div class=&quot;progress-container&quot;&gt;&lt;div class=&quot;progress-bar&quot; style=&quot;width:8%;&quot;&lt;/div&gt;&lt;/div&gt;&lt;div class=&quot;question-count&quot;&gt;13/20&lt;/div&gt;&lt;/div&gt;</tw-passagedata><tw-passagedata pid="30" name="Question 13" tags="" position="1700,300" size="100,100">As you leave the shop, you think to yourself.
@@ -459,7 +459,7 @@ What do you do?
 (if: (_primary is not &quot;C&quot;) and ($C &gt; _secondScore))[(set: _secondScore to $C)(set: _second to &quot;C&quot;)]
 
 /* Step 3: Build result string */
-(set: _comboThreshold to 3)  /* max difference to count as combo */
+(set: _comboThreshold to 4)  /* max difference to count as combo */
 (set: _result to _primary)
 (if: (_second is not &quot;&quot;) and ((_max - _secondScore) &lt;= _comboThreshold))[
     (set: _result to _result + _second)
