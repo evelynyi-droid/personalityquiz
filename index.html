@@ -95,69 +95,96 @@ ul li:hover {
 * (link: &quot;B. Replaying the day&#39;s activities, wondering if I said anything out of sorts today...&quot;)[(set: $C to (either: $C, 0) + 1)(go-to: &quot;Question 2&quot;)]
 * (link: &quot;C. Video calling my friends to hear about their day hehe~&quot;)[(set: $I to (either: $I, 0) + 1)(go-to: &quot;Question 2&quot;)]
 * (link: &quot;D. Just relaxing in bed, finally peace and quiet.&quot;)[(set: $S to (either: $S, 0) + 1)(go-to: &quot;Question 2&quot;)]
-&lt;/div&gt;&lt;div class=&quot;progress-container&quot;&gt;&lt;div class=&quot;progress-bar&quot; style=&quot;width:8%;&quot;&lt;/div&gt;&lt;/div&gt;&lt;div class=&quot;question-count&quot;&gt;2/20&lt;/div&gt;&lt;/div&gt;</tw-passagedata><tw-passagedata pid="3" name="test" tags="" position="2325,375" size="100,100">
-(set: $D to (either: $D, 0))
-(set: $I to (either: $I, 0))
-(set: $S to (either: $S, 0))
-(set: $C to (either: $C, 0))
+&lt;/div&gt;&lt;div class=&quot;progress-container&quot;&gt;&lt;div class=&quot;progress-bar&quot; style=&quot;width:8%;&quot;&lt;/div&gt;&lt;/div&gt;&lt;div class=&quot;question-count&quot;&gt;2/20&lt;/div&gt;&lt;/div&gt;</tw-passagedata><tw-passagedata pid="3" name="Simulate DISC Results" tags="" position="1500,600" size="100,100">/* Robust DISC result selection — Harlowe-safe (uses story variables so values persist) */
 
-(set: _max to $D)
-(set: _primary to &quot;D&quot;)
+/* Scores map + trait list (assumes $D, $I, $S, $C already set) */
+(set: $traitList to (a: &quot;D&quot;, &quot;I&quot;, &quot;S&quot;, &quot;C&quot;))
+(set: $scoreMap to (datamap:
+  &quot;D&quot;, $D,
+  &quot;I&quot;, $I,
+  &quot;S&quot;, $S,
+  &quot;C&quot;, $C
+))
 
-(if: $I &gt; _max)[
-  (set: _max to $I)
-  (set: _primary to &quot;I&quot;)
-]
-(if: $S &gt; _max)[
-  (set: _max to $S)
-  (set: _primary to &quot;S&quot;)
-]
-(if: $C &gt; _max)[
-  (set: _max to $C)
-  (set: _primary to &quot;C&quot;)
-]
-
-/* Find second highest */
-(set: _secondScore to -1)
-(set: _second to &quot;&quot;)
-
-(if: ($D &gt; _secondScore) and (_primary is not &quot;D&quot;))[
-  (set: _secondScore to $D)
-  (set: _second to &quot;D&quot;)
-]
-(if: ($I &gt; _secondScore) and (_primary is not &quot;I&quot;))[
-  (set: _secondScore to $I)
-  (set: _second to &quot;I&quot;)
-]
-(if: ($S &gt; _secondScore) and (_primary is not &quot;S&quot;))[
-  (set: _secondScore to $S)
-  (set: _second to &quot;S&quot;)
-]
-(if: ($C &gt; _secondScore) and (_primary is not &quot;C&quot;))[
-  (set: _secondScore to $C)
-  (set: _second to &quot;C&quot;)
+/* 1) Top score and candidates */
+(set: $topScore to -999)
+(set: $topCandidates to (a:))
+(for: each _t, ...$traitList)[
+  (set: _s to $scoreMap&#39;s _t)
+  (if: _s &gt; $topScore)[
+    (set: $topScore to _s)
+    (set: $topCandidates to (a: _t))
+  ]
+  (else-if: _s is $topScore)[
+    (set: $topCandidates to $topCandidates + (a: _t))
+  ]
 ]
 
-/* Now route to results */
+/* 2) Pick primary randomly among top candidates */
+(set: $primary to (either: ...$topCandidates))
 
-(if: _second is &quot;&quot;)[
-  (if: _primary is &quot;D&quot;)[(go-to: &quot;Result D&quot;)]
-  (else-if: _primary is &quot;I&quot;)[(go-to: &quot;Result I&quot;)]
-  (else-if: _primary is &quot;S&quot;)[(go-to: &quot;Result S&quot;)]
-  (else-if: _primary is &quot;C&quot;)[(go-to: &quot;Result C&quot;)]
+/* 3) Find best secondary among remaining */
+(set: $secondScore to -999)
+(set: $secondCandidates to (a:))
+(for: each _t, ...$traitList)[
+  (if: _t is not $primary)[
+    (set: _s to $scoreMap&#39;s _t)
+    (if: _s &gt; $secondScore)[
+      (set: $secondScore to _s)
+      (set: $secondCandidates to (a: _t))
+    ]
+    (else-if: _s is $secondScore)[
+      (set: $secondCandidates to $secondCandidates + (a: _t))
+    ]
+  ]
+]
+
+(set: $secondary to (either: ...$secondCandidates))
+
+/* 4) Build final code using combo threshold (randomizes order when top == second) */
+(set: $comboThreshold to 3)
+
+(if: ($topScore - $secondScore) &lt;= $comboThreshold)[
+  (if: $topScore is $secondScore)[
+    (set: $result to (either: $primary + $secondary, $secondary + $primary))
+  ]
+  (else:)[
+    (set: $result to $primary + $secondary)
+  ]
 ]
 (else:)[
-  (if: (_primary is &quot;D&quot;) and (_second is &quot;I&quot;))[(go-to: &quot;Result DI&quot;)]
-  (else-if: (_primary is &quot;D&quot;) and (_second is &quot;S&quot;))[(go-to: &quot;Result DS&quot;)]
-  (else-if: (_primary is &quot;D&quot;) and (_second is &quot;C&quot;))[(go-to: &quot;Result DC&quot;)]
-
-  (else-if: (_primary is &quot;I&quot;) and (_second is &quot;S&quot;))[(go-to: &quot;Result IS&quot;)]
-  (else-if: (_primary is &quot;I&quot;) and (_second is &quot;C&quot;))[(go-to: &quot;Result IC&quot;)]
-
-  (else-if: (_primary is &quot;S&quot;) and (_second is &quot;C&quot;))[(go-to: &quot;Result SC&quot;)]
-
-  (else:)[(go-to: &quot;Result &quot; + _primary)]
+  (set: $result to $primary)
 ]
+
+/* Optional: toggle debug by setting $showDebug to true before running */
+(if: $showDebug)[
+== Debug ==
+- topScore: &#39;&#39;$topScore&#39;&#39;
+- topCandidates: &#39;&#39;$topCandidates&#39;&#39;
+- primary: &#39;&#39;$primary&#39;&#39;
+- secondScore: &#39;&#39;$secondScore&#39;&#39;
+- secondCandidates: &#39;&#39;$secondCandidates&#39;&#39;
+- secondary: &#39;&#39;$secondary&#39;&#39;
+- final result: &#39;&#39;$result&#39;&#39;
+]
+
+/* Output */
+== Your DISC Results ==
+
+**Trait Scores**
+- D: $D
+- I: $I
+- S: $S
+- C: $C
+
+**Calculated Traits**
+- Primary: &#39;&#39;$primary&#39;&#39;
+- Secondary: &#39;&#39;$secondary&#39;&#39;
+- Primary Score: &#39;&#39;$topScore&#39;&#39;
+- Secondary Score: &#39;&#39;$secondScore&#39;&#39;
+- Final Result Code: &#39;&#39;&#39;$result&#39;&#39;&#39;
+
+(go-to: &quot;Result &quot; + $result)[[View Your Result →-&gt;Result {$result}]]
 </tw-passagedata><tw-passagedata pid="4" name="Question 2" tags="" position="1600,100" size="100,100">The room grows hazy, your eyes flutter shut. A soft sound stirs you — knocking at your window. How do you react?
 
 * (link: &quot;A. Huh? What is that?You head to the window, curious.&quot;)[(set: $I to $I + 1)(go-to: &quot;Question 3&quot;)]
@@ -489,7 +516,7 @@ What do you do?
 &lt;/div&gt;
 
 [[Play Again|Start]]
-</tw-passagedata><tw-passagedata pid="38" name="Debug" tags="" position="1500,550" size="100,100">(set: $debugMode to true)
+</tw-passagedata><tw-passagedata pid="38" name="Debug" tags="" position="2150,500" size="100,100">(set: $debugMode to true)
 
 Enter trait scores for testing:
 
@@ -541,7 +568,7 @@ Enter trait scores for testing:
 * (link: &quot;C. Drift to the side, quietly going down a small alleyway where no one can see you.&quot;)[(set: $S to $S + 1)(go-to: &quot;Question 7&quot;)]
 * (link: &quot;D. Stand to a corner and observe, why are they wearing masks?&quot;)[(set: $C to $C + 1)(go-to: &quot;Question 7&quot;)]
 &lt;/div&gt;&lt;div class=&quot;progress-container&quot;&gt;&lt;div class=&quot;progress-bar&quot; style=&quot;width:8%;&quot;&lt;/div&gt;&lt;/div&gt;&lt;div class=&quot;question-count&quot;&gt;7/20&lt;/div&gt;&lt;/div&gt;
-</tw-passagedata><tw-passagedata pid="42" name="Results first" tags="" position="2050,400" size="100,100">/* Step 1: Determine primary trait */
+</tw-passagedata><tw-passagedata pid="42" name="Results first" tags="" position="2150,275" size="100,100">/* Step 1: Determine primary trait */
 (set: _primary to &quot;D&quot;)
 (set: _max to $D)
 
@@ -604,7 +631,7 @@ Enter trait scores for testing:
 - Final Result Code: &#39;&#39;&#39;_result&#39;&#39;&#39;
 
 (go-to: &quot;Result &quot; + _result)[[View Your Result →-&gt;Result {_result}]]
-</tw-passagedata><tw-passagedata pid="43" name="Run Calculation→Calculate DISC" tags="" position="1550,750" size="100,100">(unset: _primary, _max, _second, _secondScore, _comboThreshold, _result)
+</tw-passagedata><tw-passagedata pid="43" name="Run Calculation→Calculate DISC" tags="" position="2250,500" size="100,100">(unset: _primary, _max, _second, _secondScore, _comboThreshold, _result)
 
 /* Step 1: Determine primary trait */
 (set: _primary to &quot;D&quot;)
@@ -771,7 +798,7 @@ Enter trait scores for testing:
 - Final Result Code: &#39;&#39;&#39;_result&#39;&#39;&#39;
 
 (go-to: &quot;Result &quot; + _result)[[View Your Result →-&gt;Result {_result}]]
-</tw-passagedata></tw-storydata>
+</tw-passagedata><tw-passagedata pid="45" name="Result {$result}" tags="" position="1600,600" size="100,100"></tw-passagedata></tw-storydata>
 <script title="Twine engine code" data-main="harlowe">(function(){"use strict";
 var require,define;!function(){var e={},r={};require=function(i){var n=e[i];return n&&(r[i]=n[1].apply(void 0,n[0].map(require)),e[i]=void 0),r[i]},(define=function(r,i,n){if("function"==typeof r)return r();e[r]=[i,n]}).amd=!0}();/*!
  * https://github.com/paulmillr/es6-shim
