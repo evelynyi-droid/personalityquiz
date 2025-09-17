@@ -427,7 +427,7 @@ What do you do?
 * (link: &quot;B. A scrap of festival food, sweet and impossible.&quot;)[(set: $I to $I + 1)(go-to: &quot;Results&quot;)]
 * (link: &quot;C. An egg, with a note that says &#39;Thank you.&quot;)[(set: $S to $S + 1)(go-to: &quot;Results&quot;)]
 * (link: &quot;D. The crystal you were given, still faintly glowing.&quot;)[(set: $D to $D + 1)(go-to: &quot;Results&quot;)]
-&lt;/div&gt;&lt;div class=&quot;progress-container&quot;&gt;&lt;div class=&quot;progress-bar&quot; style=&quot;width:8%;&quot;&lt;/div&gt;&lt;/div&gt;&lt;div class=&quot;question-count&quot;&gt;20/20&lt;/div&gt;&lt;/div&gt;</tw-passagedata><tw-passagedata pid="35" name="Results 1" tags="" position="1650,625" size="100,100">/* Step 1: Determine primary trait */
+&lt;/div&gt;&lt;div class=&quot;progress-container&quot;&gt;&lt;div class=&quot;progress-bar&quot; style=&quot;width:8%;&quot;&lt;/div&gt;&lt;/div&gt;&lt;div class=&quot;question-count&quot;&gt;20/20&lt;/div&gt;&lt;/div&gt;</tw-passagedata><tw-passagedata pid="35" name="eeeee" tags="" position="2150,375" size="100,100">/* Step 1: Determine primary trait */
 (set: _primary to &quot;D&quot;)
 (set: _max to $D)
 (if: $I &gt; _max)[(set: _primary to &quot;I&quot;)(set: _max to $I)]
@@ -489,104 +489,16 @@ What do you do?
 &lt;/div&gt;
 
 [[Play Again|Start]]
-</tw-passagedata><tw-passagedata pid="38" name="Debug" tags="" position="1550,625" size="100,100">(set: $debugMode to true)
-(if: $debugMode)[
-	=== 🎚️ Set Trait Scores ===
-	(link: &quot;Set values for D/I/S/C&quot;)[
-(if: (not ($D is a number)))[(set: $D to 0)]
-(set: $D to (prompt: &quot;Enter value for D:&quot;, (str: $D)))
-(set: $D to (num: $D))
+</tw-passagedata><tw-passagedata pid="38" name="Debug" tags="" position="1500,550" size="100,100">(set: $debugMode to true)
 
-(if: (not ($I is a number)))[(set: $I to 0)]
-(set: $I to (prompt: &quot;Enter value for I:&quot;, (str: $I)))
-(set: $I to (num: $I))
+Enter trait scores for testing:
 
-(if: (not ($S is a number)))[(set: $S to 0)]
-(set: $S to (prompt: &quot;Enter value for S:&quot;, (str: $S)))
-(set: $S to (num: $S))
+(set: $D to (num: (prompt: &quot;Enter D score&quot;, &quot;0&quot;)))
+(set: $I to (num: (prompt: &quot;Enter I score&quot;, &quot;0&quot;)))
+(set: $S to (num: (prompt: &quot;Enter S score&quot;, &quot;0&quot;)))
+(set: $C to (num: (prompt: &quot;Enter C score&quot;, &quot;0&quot;)))
 
-(if: (not ($C is a number)))[(set: $C to 0)]
-(set: $C to (prompt: &quot;Enter value for C:&quot;, (str: $C)))
-(set: $C to (num: $C))
-
-		(link: &quot;▶ Recalculate Result&quot;)[
-
-			/* Step 1: Determine primary */
-			(set: $primary to &quot;D&quot;)
-			(set: $max to $D)
-
-			(if: $I &gt; $max)[(set: $primary to &quot;I&quot;)(set: $max to $I)]
-			(if: $S &gt; $max)[(set: $primary to &quot;S&quot;)(set: $max to $S)]
-			(if: $C &gt; $max)[(set: $primary to &quot;C&quot;)(set: $max to $C)]
-
-			/* Step 2: Determine secondary */
-			(set: $secondScore to -1)
-			(set: $second to &quot;&quot;)
-
-			(if: ($primary is not &quot;D&quot;) and ($D &gt; $secondScore))[(set: $secondScore to $D)(set: $second to &quot;D&quot;)]
-			(if: ($primary is not &quot;I&quot;) and ($I &gt; $secondScore))[(set: $secondScore to $I)(set: $second to &quot;I&quot;)]
-			(if: ($primary is not &quot;S&quot;) and ($S &gt; $secondScore))[(set: $secondScore to $S)(set: $second to &quot;S&quot;)]
-			(if: ($primary is not &quot;C&quot;) and ($C &gt; $secondScore))[(set: $secondScore to $C)(set: $second to &quot;C&quot;)]
-
-			/* Step 3: Build result string */
-			(set: $comboThreshold to 4)
-			(set: $result to $primary)
-
-			(if: ($second is not &quot;&quot;) and (($max - $secondScore) &lt;= $comboThreshold))[
-				(set: $result to $result + $second)
-			]
-
-			/* Step 4: Alphabetize combos */
-			(if: $result is &quot;ID&quot;)[(set: $result to &quot;DI&quot;)]
-			(if: $result is &quot;SD&quot;)[(set: $result to &quot;DS&quot;)]
-			(if: $result is &quot;CD&quot;)[(set: $result to &quot;DC&quot;)]
-			(if: $result is &quot;IC&quot;)[(set: $result to &quot;CI&quot;)]
-			(if: $result is &quot;SC&quot;)[(set: $result to &quot;CS&quot;)]
-			(if: $result is &quot;IS&quot;)[(set: $result to &quot;IS&quot;)]
-			(if: $result is &quot;DS&quot;)[(set: $result to &quot;DS&quot;)]
-
-			=== 🧠 Recalculated Results ===
-			- **D**: $D  
-			- **I**: $I  
-			- **S**: $S  
-			- **C**: $C
-
-			- **Primary Trait**: $primary  
-			- **Primary Score**: $max
-
-			- **Secondary Trait**: $second  
-			- **Secondary Score**: $secondScore
-
-			- **Combo Threshold**: $comboThreshold  
-			- **Final Result**: $result
-
-			=== ⚠️ Debug Checks ===
-			(if: $primary is &quot;D&quot; and $D is not $max)[❌ D is primary but D ≠ max  
-			]
-			(if: $primary is &quot;I&quot; and $I is not $max)[❌ I is primary but I ≠ max  
-			]
-			(if: $primary is &quot;S&quot; and $S is not $max)[❌ S is primary but S ≠ max  
-			]
-			(if: $primary is &quot;C&quot; and $C is not $max)[❌ C is primary but C ≠ max  
-			]
-
-			(if: $second is &quot;D&quot; and $D is not $secondScore)[❌ D mismatch as secondary  
-			]
-			(if: $second is &quot;I&quot; and $I is not $secondScore)[❌ I mismatch as secondary  
-			]
-			(if: $second is &quot;S&quot; and $S is not $secondScore)[❌ S mismatch as secondary  
-			]
-			(if: $second is &quot;C&quot; and $C is not $secondScore)[❌ C mismatch as secondary  
-			]
-
-			(link: &quot;🔁 Change Values Again&quot;)[(go-to: &quot;Debug&quot;)]
-		]
-	]
-]
-
-(if: not $debugMode)[
-🔒 Debug mode is off. Set `$debugMode to true` to use this page.
-]
+[[Run Calculation→Calculate DISC]]
 </tw-passagedata><tw-passagedata pid="39" name="Answer header" tags="" position="550,200" size="100,100">.answer-header {
     font-size: 1.1em;          /* a bit smaller than h3 */
     font-weight: bold;         /* strong emphasis */
@@ -618,18 +530,18 @@ What do you do?
   [[Calmly listen and help soothe...|Result D]]
 &lt;/div&gt;
 
-</tw-passagedata><tw-passagedata pid="40" name="Result A" tags="" position="487.5,325" size="100,100"></tw-passagedata><tw-passagedata pid="41" name="Result B" tags="" position="612.5,325" size="100,100"></tw-passagedata><tw-passagedata pid="42" name="Question 5" tags="" position="1900,100" size="100,100">A path of floating stones leads ahead, beckoning you towards a brightly coloured village entrance. How do you cross?
+</tw-passagedata><tw-passagedata pid="40" name="Question 5" tags="" position="1900,100" size="100,100">A path of floating stones leads ahead, beckoning you towards a brightly coloured village entrance. How do you cross?
 * (link: &quot;A. Slowly balacing your weight on each stone.&quot;)[(set: $S to $S + 1)(go-to: &quot;Question 6&quot;)]
 * (link: &quot;B. Test each stone with a tap before committing.&quot;)[(set: $C to $C + 1)(go-to: &quot;Question 6&quot;)]
 * (link: &quot;C. Hop, skip and jump!&quot;)[(set: $I to $I + 1)(go-to: &quot;Question 6&quot;)]
 * (link: &quot;D. Leap from stone to stone with wide strides.&quot;)[(set: $D to $D + 1)(go-to: &quot;Question 6&quot;)]
-&lt;/div&gt;&lt;div class=&quot;progress-container&quot;&gt;&lt;div class=&quot;progress-bar&quot; style=&quot;width:8%;&quot;&lt;/div&gt;&lt;/div&gt;&lt;div class=&quot;question-count&quot;&gt;6/20&lt;/div&gt;&lt;/div&gt;</tw-passagedata><tw-passagedata pid="43" name="Question 6" tags="" position="1500,200" size="100,100">You step into a glowing festival, people in animal masks whirl past you. 
+&lt;/div&gt;&lt;div class=&quot;progress-container&quot;&gt;&lt;div class=&quot;progress-bar&quot; style=&quot;width:8%;&quot;&lt;/div&gt;&lt;/div&gt;&lt;div class=&quot;question-count&quot;&gt;6/20&lt;/div&gt;&lt;/div&gt;</tw-passagedata><tw-passagedata pid="41" name="Question 6" tags="" position="1500,200" size="100,100">You step into a glowing festival, people in animal masks whirl past you. 
  * (link: &quot;A. Hurriedly find a mask on the floor and blend into the crowd.&quot;)[(set: $I to $I + 1)(go-to: &quot;Question 7&quot;)]
 * (link: &quot;B. Keep walking into the village, ignoring the stares.&quot;)[(set: $D to $D + 1)(go-to: &quot;Question 7&quot;)]
 * (link: &quot;C. Drift to the side, quietly going down a small alleyway where no one can see you.&quot;)[(set: $S to $S + 1)(go-to: &quot;Question 7&quot;)]
 * (link: &quot;D. Stand to a corner and observe, why are they wearing masks?&quot;)[(set: $C to $C + 1)(go-to: &quot;Question 7&quot;)]
 &lt;/div&gt;&lt;div class=&quot;progress-container&quot;&gt;&lt;div class=&quot;progress-bar&quot; style=&quot;width:8%;&quot;&lt;/div&gt;&lt;/div&gt;&lt;div class=&quot;question-count&quot;&gt;7/20&lt;/div&gt;&lt;/div&gt;
-</tw-passagedata><tw-passagedata pid="44" name="Results" tags="" position="1300,500" size="100,100">/* Step 1: Determine primary trait */
+</tw-passagedata><tw-passagedata pid="42" name="Results first" tags="" position="2050,400" size="100,100">/* Step 1: Determine primary trait */
 (set: _primary to &quot;D&quot;)
 (set: _max to $D)
 
@@ -688,6 +600,173 @@ What do you do?
 - Primary: &#39;&#39;_primary&#39;&#39;
 - Secondary: &#39;&#39;_second&#39;&#39;
 - Primary Score: &#39;&#39;_max&#39;&#39;
+- Secondary Score: &#39;&#39;_secondScore&#39;&#39;
+- Final Result Code: &#39;&#39;&#39;_result&#39;&#39;&#39;
+
+(go-to: &quot;Result &quot; + _result)[[View Your Result →-&gt;Result {_result}]]
+</tw-passagedata><tw-passagedata pid="43" name="Run Calculation→Calculate DISC" tags="" position="1550,750" size="100,100">(unset: _primary, _max, _second, _secondScore, _comboThreshold, _result)
+
+/* Step 1: Determine primary trait */
+(set: _primary to &quot;D&quot;)
+(set: _max to $D)
+
+(if: $I &gt; _max)[
+    (set: _primary to &quot;I&quot;)
+    (set: _max to $I)
+]
+(if: $S &gt; _max)[
+    (set: _primary to &quot;S&quot;)
+    (set: _max to $S)
+]
+(if: $C &gt; _max)[
+    (set: _primary to &quot;C&quot;)
+    (set: _max to $C)
+]
+
+/* Step 2: Determine secondary trait */
+(set: _secondScore to -1)
+(set: _second to &quot;&quot;)
+
+(if: _primary is not &quot;D&quot; and $D &gt; _secondScore)[
+    (set: _secondScore to $D)
+    (set: _second to &quot;D&quot;)
+]
+(if: _primary is not &quot;I&quot; and $I &gt; _secondScore)[
+    (set: _secondScore to $I)
+    (set: _second to &quot;I&quot;)
+]
+(if: _primary is not &quot;S&quot; and $S &gt; _secondScore)[
+    (set: _secondScore to $S)
+    (set: _second to &quot;S&quot;)
+]
+(if: _primary is not &quot;C&quot; and $C &gt; _secondScore)[
+    (set: _secondScore to $C)
+    (set: _second to &quot;C&quot;)
+]
+
+/* Step 3: Build result string */
+(set: _comboThreshold to 3)
+(set: _result to _primary)
+
+(if: _second is not &quot;&quot; and (_max - _secondScore) &lt;= _comboThreshold)[
+    (set: _result to _primary + _second)
+]
+
+/* Step 4: Output scores and traits */
+== Your DISC Results ==
+
+**Trait Scores**
+- D: $D
+- I: $I
+- S: $S
+- C: $C
+
+**Calculated Traits**
+- Primary: &#39;&#39;_primary&#39;&#39;
+- Secondary: &#39;&#39;_second&#39;&#39;
+- Primary Score: &#39;&#39;_max&#39;&#39;
+- Secondary Score: &#39;&#39;_secondScore&#39;&#39;
+- Final Result Code: &#39;&#39;&#39;_result&#39;&#39;&#39;
+
+[[View Your Result →-&gt;Result {_result}]]
+</tw-passagedata><tw-passagedata pid="44" name="Results" tags="" position="1275,550" size="100,100">/* Robust DISC result selection with randomized tie-breaks */
+
+/* Scores map + trait list */
+(set: _traitList to (a: &quot;D&quot;, &quot;I&quot;, &quot;S&quot;, &quot;C&quot;))
+(set: _scoreMap to (datamap:
+    &quot;D&quot;, $D,
+    &quot;I&quot;, $I,
+    &quot;S&quot;, $S,
+    &quot;C&quot;, $C
+))
+
+/* 1) Find top score and all traits that have it */
+(set: _topScore to -999)
+(set: _topCandidates to (a:))
+
+(for: each _t, ..._traitList)[
+    (set: _s to _scoreMap&#39;s _t)
+    (if: _s &gt; _topScore)[
+        (set: _topScore to _s)
+        (set: _topCandidates to (a: _t))
+    ]
+    (else-if: _s is _topScore)[
+        (set: _topCandidates to _topCandidates + (a: _t))
+    ]
+]
+
+/* 2) Pick primary randomly among top candidates (fixes the &quot;always S&quot; problem) */
+(set: _primary to (either: ..._topCandidates))
+
+/* Step 3: Build result string */
+(set: _comboThreshold to 3)
+(set: _result to _primary)
+
+(if: _second is not &quot;&quot; and (_max - _secondScore) &lt;= _comboThreshold)[
+    (set: _result to _primary + _second)
+]
+
+/* 3) Find the best secondary among the remaining traits */
+(set: _secondScore to -999)
+(set: _secondCandidates to (a:))
+
+(for: each _t, ..._traitList)[
+    (if: _t is not _primary)[
+        (set: _s to _scoreMap&#39;s _t)
+        (if: _s &gt; _secondScore)[
+            (set: _secondScore to _s)
+            (set: _secondCandidates to (a: _t))
+        ]
+        (else-if: _s is _secondScore)[
+            (set: _secondCandidates to _secondCandidates + (a: _t))
+        ]
+    ]
+]
+
+(set: _secondary to (either: ..._secondCandidates))
+
+/* 4) Build the final code using your combo threshold.
+   If top and second are equal, randomize order so SC/CS both appear over runs. */
+(set: _comboThreshold to 3)
+
+(if: (_topScore - _secondScore) &lt;= _comboThreshold)[
+    (if: _topScore is _secondScore)[
+        (set: _result to (either: _primary + _secondary, _secondary + _primary))
+    ]
+    (else:)[
+        (set: _result to _primary + _secondary)
+    ]
+]
+(else:)[
+    (set: _result to _primary)
+]
+
+/* Optional debug: set $showDebug to true to see internal picks */
+(set: $showDebug to false)
+(if: $showDebug)[
+== Debug ==
+- topScore: &#39;&#39;_topScore&#39;&#39;
+- topCandidates: &#39;&#39;_topCandidates&#39;&#39;
+- primary: &#39;&#39;_primary&#39;&#39;
+- secondScore: &#39;&#39;_secondScore&#39;&#39;
+- secondCandidates: &#39;&#39;_secondCandidates&#39;&#39;
+- secondary: &#39;&#39;_secondary&#39;&#39;
+- final result: &#39;&#39;&#39;_result&#39;&#39;&#39;
+]
+
+/* Output */
+== Your DISC Results ==
+
+**Trait Scores**
+- D: $D
+- I: $I
+- S: $S
+- C: $C
+
+**Calculated Traits**
+- Primary: &#39;&#39;_primary&#39;&#39;
+- Secondary: &#39;&#39;_secondary&#39;&#39;
+- Primary Score: &#39;&#39;_topScore&#39;&#39;
 - Secondary Score: &#39;&#39;_secondScore&#39;&#39;
 - Final Result Code: &#39;&#39;&#39;_result&#39;&#39;&#39;
 
